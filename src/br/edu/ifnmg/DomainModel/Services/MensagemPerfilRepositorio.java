@@ -6,9 +6,7 @@
 
 package br.edu.ifnmg.DomainModel.Services;
 
-import br.edu.ifnmg.DomainModel.Mensagem;
 import br.edu.ifnmg.DomainModel.MensagemPerfil;
-import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -16,6 +14,6 @@ import javax.ejb.Local;
  * @author petronio
  */
 @Local
-public interface MensagemRepositorio extends Repositorio<Mensagem> {
-    List<Mensagem> porPerfil(MensagemPerfil perfil);
+public interface MensagemPerfilRepositorio extends Repositorio<MensagemPerfil> {
+    public MensagemPerfil getPadrao();
 }

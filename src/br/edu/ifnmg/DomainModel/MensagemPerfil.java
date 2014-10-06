@@ -10,13 +10,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,41 +26,29 @@ import javax.persistence.Version;
  * @author petronio
  */
 @Entity
-@Table(name = "mensagens")
-public class Mensagem implements Entidade, Serializable {
+@Table(name = "mensagensperfis")
+public class MensagemPerfil implements Entidade, Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column(length = 600)
-    private String destinatario;
+    private String nome;
     
-    @Lob
-    private String assunto;
+    private boolean padrao;
     
-    @Lob
-    private String corpo;
+    private String usuario;
     
-    private int numeroTentativas;
+    private String senha;
     
-    @ManyToOne
-    private MensagemPerfil perfil;
+    private String servidor;
+    
+    private int porta;
+    
+    private boolean ssl;
+    
+    private boolean html;
 
-    public Mensagem(){
-        this.destinatario = "";
-        this.assunto = "";
-        this.corpo = "";
-        this.numeroTentativas = 0;
-    }
-    
-    public Mensagem(String destinatario, String cabecalho, String corpo) {
-        this.destinatario = destinatario;
-        this.assunto = cabecalho;
-        this.corpo = corpo;
-        this.numeroTentativas = 0;
-    }    
-    
     @Override
     public Long getId() {
         return id;
@@ -73,54 +59,81 @@ public class Mensagem implements Entidade, Serializable {
         this.id = id;
     }
 
-    public String getDestinatario() {
-        return destinatario;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDestinatario(String destinatario) {
-        this.destinatario = destinatario;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getAssunto() {
-        return assunto;
+    public boolean isPadrao() {
+        return padrao;
     }
 
-    public void setAssunto(String assunto) {
-        this.assunto = assunto;
+    public void setPadrao(boolean dafault) {
+        this.padrao = dafault;
     }
 
-    public String getCorpo() {
-        return corpo;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setCorpo(String corpo) {
-        this.corpo = corpo;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public int getNumeroTentativas() {
-        return numeroTentativas;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setNumeroTentativas(int numeroTentativas) {
-        this.numeroTentativas = numeroTentativas;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public MensagemPerfil getPerfil() {
-        return perfil;
+    public String getServidor() {
+        return servidor;
     }
 
-    public void setPerfil(MensagemPerfil perfil) {
-        this.perfil = perfil;
+    public void setServidor(String servidor) {
+        this.servidor = servidor;
     }
-    
-    
+
+    public int getPorta() {
+        return porta;
+    }
+
+    public void setPorta(int porta) {
+        this.porta = porta;
+    }
+
+    public boolean isSsl() {
+        return ssl;
+    }
+
+    public void setSsl(boolean ssl) {
+        this.ssl = ssl;
+    }
+
+    public boolean isHtml() {
+        return html;
+    }
+
+    public void setHtml(boolean html) {
+        this.html = html;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.destinatario);
-        hash = 89 * hash + Objects.hashCode(this.assunto);
-        hash = 89 * hash + Objects.hashCode(this.corpo);
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.nome);
+        hash = 37 * hash + (this.padrao ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.usuario);
+        hash = 37 * hash + Objects.hashCode(this.senha);
+        hash = 37 * hash + Objects.hashCode(this.servidor);
+        hash = 37 * hash + this.porta;
+        hash = 37 * hash + (this.ssl ? 1 : 0);
+        hash = 37 * hash + (this.html ? 1 : 0);
         return hash;
     }
 
@@ -132,14 +145,29 @@ public class Mensagem implements Entidade, Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Mensagem other = (Mensagem) obj;
-        if (!Objects.equals(this.destinatario, other.destinatario)) {
+        final MensagemPerfil other = (MensagemPerfil) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
-        if (!Objects.equals(this.assunto, other.assunto)) {
+        if (this.padrao != other.padrao) {
             return false;
         }
-        if (!Objects.equals(this.corpo, other.corpo)) {
+        if (!Objects.equals(this.usuario, other.usuario)) {
+            return false;
+        }
+        if (!Objects.equals(this.senha, other.senha)) {
+            return false;
+        }
+        if (!Objects.equals(this.servidor, other.servidor)) {
+            return false;
+        }
+        if (this.porta != other.porta) {
+            return false;
+        }
+        if (this.ssl != other.ssl) {
+            return false;
+        }
+        if (this.html != other.html) {
             return false;
         }
         return true;
@@ -149,10 +177,10 @@ public class Mensagem implements Entidade, Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.ifnmg.GerenciadorMensagens.DomainModel.Mensagem[ id=" + id + " ]";
+        return nome;
     }
     
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Pessoa criador;
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -216,4 +244,5 @@ public class Mensagem implements Entidade, Serializable {
     public void setVersao(Long versao) {
         this.versao = versao;
     }
+    
 }

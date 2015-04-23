@@ -56,9 +56,10 @@ public class Mensagem implements Entidade, Serializable {
         this.numeroTentativas = 0;
     }
     
-    public Mensagem(String destinatario, String cabecalho, String corpo) {
+    public Mensagem(String destinatario, String cabecalho, String corpo, MensagemPerfil perfil) {
         this.destinatario = destinatario;
         this.assunto = cabecalho;
+        this.perfil = perfil;
         this.corpo = corpo;
         this.numeroTentativas = 0;
     }    

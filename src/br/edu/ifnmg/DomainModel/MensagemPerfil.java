@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,20 +33,23 @@ public class MensagemPerfil implements Entidade, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
+    @Column(nullable = false, unique = true)
     private String nome;
     
     private boolean padrao;
     
+    @Column(nullable = false)
     private String usuario;
     
     private String senha;
     
+    @Column(nullable = false)
     private String servidor;
     
     private int porta;
     
-    private boolean ssl;
+    private boolean requerSsl;
     
     private boolean html;
 
@@ -107,12 +111,12 @@ public class MensagemPerfil implements Entidade, Serializable {
         this.porta = porta;
     }
 
-    public boolean isSsl() {
-        return ssl;
+    public boolean isRequerSsl() {
+        return requerSsl;
     }
 
-    public void setSsl(boolean ssl) {
-        this.ssl = ssl;
+    public void setRequerSsl(boolean requerSsl) {
+        this.requerSsl = requerSsl;
     }
 
     public boolean isHtml() {
@@ -132,7 +136,7 @@ public class MensagemPerfil implements Entidade, Serializable {
         hash = 37 * hash + Objects.hashCode(this.senha);
         hash = 37 * hash + Objects.hashCode(this.servidor);
         hash = 37 * hash + this.porta;
-        hash = 37 * hash + (this.ssl ? 1 : 0);
+        hash = 37 * hash + (this.requerSsl ? 1 : 0);
         hash = 37 * hash + (this.html ? 1 : 0);
         return hash;
     }
@@ -164,7 +168,7 @@ public class MensagemPerfil implements Entidade, Serializable {
         if (this.porta != other.porta) {
             return false;
         }
-        if (this.ssl != other.ssl) {
+        if (this.requerSsl != other.requerSsl) {
             return false;
         }
         if (this.html != other.html) {

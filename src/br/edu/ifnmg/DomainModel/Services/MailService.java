@@ -17,6 +17,8 @@
 
 package br.edu.ifnmg.DomainModel.Services;
 
+import br.edu.ifnmg.DomainModel.Mensagem;
+import br.edu.ifnmg.DomainModel.MensagemPerfil;
 import javax.ejb.Local;
 
 /**
@@ -25,5 +27,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface MailService {    
+    public boolean enviar(Mensagem m);
     public boolean enviar(String destinatario, String assunto, String corpo);
+    public boolean enviar(String destinatario, String assunto, String corpo, MensagemPerfil perfil);
 }

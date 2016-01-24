@@ -43,6 +43,7 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
     private HashMap<String, String> join = new HashMap<>();
     private HashMap<Integer, Object> params = new HashMap<>();
     private boolean jts = true;
+    private int numeroresultados;
 
     public DAOGenerico(Class t) {
         tipo = t;
@@ -103,6 +104,12 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
         addOp(campo, "<", valor);
         return this;
     }
+    
+    @Override
+    public Repositorio<T> MaximoResultados(int qtd) {
+        this.numeroresultados = qtd;
+        return this;
+    }
 
     @Override
     public Repositorio<T> MenorOuIgualA(String campo, Object valor) {
@@ -143,7 +150,7 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
 
     @Override
     public Repositorio<T> NaoENulo(String campo) {
-        addSpecialOp(campo, "is null");
+        addSpecialOp(campo, "is not null");
         return this;
     }
 
@@ -298,6 +305,8 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
             for (Integer key : params.keySet()) {
                 query.setParameter("p" + key.toString(), params.get(key));
             }
+            if(numeroresultados > 0)
+                query.setMaxResults(numeroresultados);
 
             return query;
         } catch (Exception ex) {

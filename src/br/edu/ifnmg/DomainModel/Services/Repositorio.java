@@ -50,4 +50,6 @@ public interface Repositorio<T> {
     public Repositorio<T> Ordenar(String campo, String sentido);
     public Repositorio<T> Setar(String campo, Object valor);
     
+    public Repositorio<T> MaximoResultados(int qtd);
+    
 }

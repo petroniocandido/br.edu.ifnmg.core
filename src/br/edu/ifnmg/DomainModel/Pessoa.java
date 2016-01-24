@@ -18,7 +18,9 @@
 package br.edu.ifnmg.DomainModel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +31,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -45,6 +48,7 @@ import javax.persistence.Version;
 @Table(name = "pessoas", indexes = {
     @Index(columnList = "cpf"),
     @Index(columnList = "email")})
+//@Inheritance(strategy= InheritanceType.JOINED)
 public class Pessoa implements Entidade, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -82,6 +86,36 @@ public class Pessoa implements Entidade, Serializable {
     @Enumerated(EnumType.STRING)
     protected Sexo sexo;
     
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = AreaConhecimento.class)
+    private List<AreaConhecimento> areasConhecimento;
+    
+    @ManyToOne 
+    private Campus campus;
+    
+    private String lattes;
+
+    public Pessoa() {
+        this.areasConhecimento = new ArrayList<>();
+        this.sexo = Sexo.M;
+        this.tipo = PessoaTipo.Fisica;
+        this.tratamento = PronomeTratamento.Senhor;
+    }
+     
+    
+    public void add(AreaConhecimento a) {
+        if(a == null) return;
+        if (!areasConhecimento.contains(a)) {
+            areasConhecimento.add(a);
+        }
+    }
+
+    public void remove(AreaConhecimento a) {
+        if(a == null) return;
+        if (areasConhecimento.contains(a)) {
+            areasConhecimento.remove(a);
+        }
+    }
+    
     @Override
     public Long getId() {
         return id;
@@ -92,7 +126,30 @@ public class Pessoa implements Entidade, Serializable {
         this.id = id;
     }
 
+    public List<AreaConhecimento> getAreasConhecimento() {
+        return areasConhecimento;
+    }
 
+    public void setAreasConhecimento(List<AreaConhecimento> areasConhecimento) {
+        this.areasConhecimento = areasConhecimento;
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
+
+    public String getLattes() {
+        return lattes;
+    }
+
+    public void setLattes(String lattes) {
+        this.lattes = lattes;
+    }
+    
     public String getNome() {
         return nome;
     }

@@ -8,6 +8,7 @@ import br.edu.ifnmg.DomainModel.Entidade;
 import br.edu.ifnmg.DomainModel.Pessoa;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -67,13 +68,10 @@ public class AreaConhecimento implements Entidade, Serializable {
         this.numeroCNPQ = numeroCNPQ;
     }
 
-    
-    
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 67 * hash + Objects.hashCode(this.numeroCNPQ);
         return hash;
     }
 
@@ -86,12 +84,13 @@ public class AreaConhecimento implements Entidade, Serializable {
             return false;
         }
         final AreaConhecimento other = (AreaConhecimento) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if (!Objects.equals(this.numeroCNPQ, other.numeroCNPQ)) {
             return false;
         }
         return true;
     }
 
+    
     @Override
     public String toString() {
         return numeroCNPQ + " - " + nome;

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -86,7 +87,7 @@ public class Pessoa implements Entidade, Serializable {
     @Enumerated(EnumType.STRING)
     protected Sexo sexo;
     
-    @ManyToMany(fetch = FetchType.EAGER, targetEntity = AreaConhecimento.class)
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = AreaConhecimento.class)
     private List<AreaConhecimento> areasConhecimento;
     
     @ManyToOne 

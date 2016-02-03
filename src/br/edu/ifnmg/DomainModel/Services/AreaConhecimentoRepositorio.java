@@ -5,8 +5,8 @@
 package br.edu.ifnmg.DomainModel.Services;
 
 
-import br.edu.ifnmg.DomainModel.Services.Repositorio;
 import br.edu.ifnmg.DomainModel.AreaConhecimento;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -16,4 +16,5 @@ import javax.ejb.Local;
 @Local
 public interface AreaConhecimentoRepositorio extends Repositorio<AreaConhecimento> {
     public AreaConhecimento Abrir(String numeroCNPQ);
+    public List<AreaConhecimento> BuscarPorNome(String nome);
 }

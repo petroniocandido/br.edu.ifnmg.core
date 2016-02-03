@@ -85,6 +85,9 @@ public class Pessoa implements Entidade, Serializable {
     protected PronomeTratamento tratamento;
     
     @Enumerated(EnumType.STRING)
+    protected Titulacao titulacaoMaxima;
+    
+    @Enumerated(EnumType.STRING)
     protected Sexo sexo;
     
     @ManyToMany(cascade = CascadeType.MERGE, targetEntity = AreaConhecimento.class)
@@ -251,9 +254,15 @@ public class Pessoa implements Entidade, Serializable {
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
-    
-    
 
+    public Titulacao getTitulacaoMaxima() {
+        return titulacaoMaxima;
+    }
+
+    public void setTitulacaoMaxima(Titulacao titulacaoMaxima) {
+        this.titulacaoMaxima = titulacaoMaxima;
+    }
+    
     
     @Override
     public int hashCode() {

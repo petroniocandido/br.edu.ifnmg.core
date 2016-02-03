@@ -13,7 +13,7 @@ package br.edu.ifnmg.DomainModel;
 public enum PronomeTratamento {
     Senhor("Sr."),
     Senhora("Sra."),
-    Senhorita("Sra."),
+    Senhorita("Srta."),
     Professor("Prof."),
     Especialista("Prof. Esp."),
     Mestre("Prof. Ms."),

@@ -4,8 +4,6 @@
  */
 package br.edu.ifnmg.DomainModel;
 
-import br.edu.ifnmg.DomainModel.Entidade;
-import br.edu.ifnmg.DomainModel.Pessoa;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -17,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;

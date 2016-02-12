@@ -28,6 +28,7 @@ public interface Repositorio<T> {
     public boolean Apagar(T obj);
     public T Abrir(Long id);
     public List<T> Buscar(T filtro);
+    public List<T> BuscarTexto(String filtro);
     public Exception getErro();
     public T Refresh(T obj);
     public boolean Atualiza();

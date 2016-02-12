@@ -477,5 +477,9 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
         this.jts = jts;
     }
     
+    @Override
+    public List<T> BuscarTexto(String filtro){
+        return null;
+    }
     
 }

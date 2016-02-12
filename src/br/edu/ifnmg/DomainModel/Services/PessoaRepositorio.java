@@ -18,6 +18,7 @@
 package br.edu.ifnmg.DomainModel.Services;
 
 import br.edu.ifnmg.DomainModel.Pessoa;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -28,4 +29,5 @@ import javax.ejb.Local;
 public interface PessoaRepositorio extends Repositorio<Pessoa> {
     public Pessoa Abrir(String login);
     public Pessoa AbrirPorCPF(String cpf);
+    public List<Pessoa> BuscarTexto(Pessoa filtro);
 }

@@ -66,11 +66,14 @@ public class Pessoa implements Entidade, Serializable {
     @Column(nullable = false, unique = true, length = 300)
     private String email;
 
-    @Column(length = 11)
+    @Column(length = 12)
     private String telefone;
 
     @Column(nullable = false)
     private String senha;
+    
+    @Column()
+    private String outraInstituicao;
 
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
@@ -88,6 +91,9 @@ public class Pessoa implements Entidade, Serializable {
     protected Titulacao titulacaoMaxima;
     
     @Enumerated(EnumType.STRING)
+    protected Atuacao atuacao;
+    
+    @Enumerated(EnumType.STRING)
     protected Sexo sexo;
     
     @ManyToMany(cascade = CascadeType.MERGE, targetEntity = AreaConhecimento.class)
@@ -95,6 +101,10 @@ public class Pessoa implements Entidade, Serializable {
     
     @ManyToOne 
     private Campus campus;
+    
+    private boolean necessidadesEspecificas;
+    
+    private String descricaoNecessidadesEspecificas;
     
     private String lattes;
 
@@ -186,8 +196,8 @@ public class Pessoa implements Entidade, Serializable {
 
     public String getTelefone() {
         if (telefoneFormatado == null) {
-            if (telefone != null && telefone.length() == 10) {
-                telefoneFormatado = "(" + telefone.substring(0, 2) + ") " + telefone.substring(2, 6) + "-" + telefone.substring(6, 10);
+            if (telefone != null && telefone.length() == 11) {
+                telefoneFormatado = "(" + telefone.substring(0, 2) + ") " + telefone.substring(2, 7) + "-" + telefone.substring(7, 11);
             }
         }
         return telefoneFormatado;
@@ -262,8 +272,41 @@ public class Pessoa implements Entidade, Serializable {
     public void setTitulacaoMaxima(Titulacao titulacaoMaxima) {
         this.titulacaoMaxima = titulacaoMaxima;
     }
+
+    public Atuacao getAtuacao() {
+        return atuacao;
+    }
+
+    public void setAtuacao(Atuacao atuacao) {
+        this.atuacao = atuacao;
+    }
+
+    public boolean isNecessidadesEspecificas() {
+        return necessidadesEspecificas;
+    }
+
+    public void setNecessidadesEspecificas(boolean necessidadesEspecificas) {
+        this.necessidadesEspecificas = necessidadesEspecificas;
+    }
+
+    public String getDescricaoNecessidadesEspecificas() {
+        return descricaoNecessidadesEspecificas;
+    }
+
+    public void setDescricaoNecessidadesEspecificas(String descricaoNecessidadesEspecificas) {
+        this.descricaoNecessidadesEspecificas = descricaoNecessidadesEspecificas;
+    }
+
+    public String getOutraInstituicao() {
+        return outraInstituicao;
+    }
+
+    public void setOutraInstituicao(String outraInstituicao) {
+        this.outraInstituicao = outraInstituicao;
+    }
     
     
+        
     @Override
     public int hashCode() {
         int hash = 0;

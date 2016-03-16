@@ -18,7 +18,7 @@ public enum Titulacao {
     Licenciado(true,false,"Ensino Superior - Licenciatura"),
     Especialista(false,true,"Pós-Graduação Latu Sensu - Especialização/MBA"),
     Mestre(false,true,"Pós-Graduação Strictu Sensu - Mestrado"),
-    Doutor(false,true,"Pós-Graduação Latu Sensu - Doutorado");
+    Doutor(false,true,"Pós-Graduação Strictu Sensu - Doutorado");
     
     private final boolean graduacao;
     private final boolean posGraduacao;

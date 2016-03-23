@@ -45,6 +45,7 @@ public interface Repositorio<T> {
     public Repositorio<T> MaiorOuIgualA(String campo, Object valor);
     public Repositorio<T> MenorQue(String campo, Object valor);
     public Repositorio<T> MenorOuIgualA(String campo, Object valor);
+    public Repositorio<T> NotLike(String campo, String valor);
     public Repositorio<T> Like(String campo, String valor);
     public Repositorio<T> ENulo(String campo);
     public Repositorio<T> NaoENulo(String campo);

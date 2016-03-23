@@ -16,4 +16,6 @@ import javax.ejb.Local;
 @Local
 public interface AreaConhecimentoRepositorio extends Repositorio<AreaConhecimento> {
     public AreaConhecimento Abrir(String numeroCNPQ);
+    public List<AreaConhecimento> GrandesAreas();
+    public List<AreaConhecimento> Areas();
 }

@@ -141,6 +141,15 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
         addSpecialOp(campo, "like '%" + valor + "%'");
         return this;
     }
+    
+    @Override
+    public Repositorio<T> NotLike(String campo, String valor) {
+        if (valor == null || valor.toString().length() == 0) {
+            return this;
+        }
+        addSpecialOp(campo, "not like '%" + valor + "%'");
+        return this;
+    }
 
     @Override
     public Repositorio<T> ENulo(String campo) {

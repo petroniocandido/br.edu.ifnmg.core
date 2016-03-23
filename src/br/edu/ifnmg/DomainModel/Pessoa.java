@@ -32,6 +32,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -97,6 +99,9 @@ public class Pessoa implements Entidade, Serializable {
     protected Sexo sexo;
     
     @ManyToMany(cascade = CascadeType.MERGE, targetEntity = AreaConhecimento.class)
+    @JoinTable(name = "pessoas_areasconhecimento", 
+            joinColumns=@JoinColumn(name="Pessoa_ID", referencedColumnName="ID"),
+            inverseJoinColumns=@JoinColumn(name="areasConhecimento_ID", referencedColumnName="ID"))
     private List<AreaConhecimento> areasConhecimento;
     
     @ManyToOne 
@@ -303,6 +308,19 @@ public class Pessoa implements Entidade, Serializable {
 
     public void setOutraInstituicao(String outraInstituicao) {
         this.outraInstituicao = outraInstituicao;
+    }
+    
+    @Transient
+    String ac = null;
+    public String areasConhecimento(){
+        if(ac == null){
+            ac = "";
+            for(AreaConhecimento a : getAreasConhecimento()){
+                if(!ac.isEmpty()) ac = ac + ",";
+                ac = ac + a.toString();
+            }
+        }
+        return ac;
     }
     
     

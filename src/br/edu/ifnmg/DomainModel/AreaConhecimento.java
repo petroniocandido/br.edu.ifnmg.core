@@ -6,16 +6,21 @@ package br.edu.ifnmg.DomainModel;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +44,53 @@ public class AreaConhecimento implements Entidade, Serializable {
     
     @Column(nullable=false, unique = true)
     private String numeroCNPQ;
+    
+    @ManyToOne
+    private AreaConhecimento grandeArea;
+    
+    @ManyToOne
+    private AreaConhecimento area;
+    
+    @ManyToOne
+    private AreaConhecimento superArea;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "superArea")
+    private List<AreaConhecimento> subAreas;
+    
+    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = Pessoa.class)
+    @JoinTable(name = "pessoas_areasconhecimento", 
+            inverseJoinColumns=@JoinColumn(name="Pessoa_ID", referencedColumnName="ID"),
+            joinColumns=@JoinColumn(name="areasConhecimento_ID", referencedColumnName="ID"))
+    private List<Pessoa> pessoas;
+    
+    public boolean isGrandeArea() {
+        String tmp = numeroCNPQ.substring(1, 10);
+        return tmp.contentEquals(".00.00.00");
+    }
+    
+    public boolean isArea() {
+        String tmp = numeroCNPQ.substring(5, 10);
+        return tmp.contentEquals("00.00");
+    }
+        
+    public String getGrandeAreaCodigo() {
+        return numeroCNPQ.substring(0, 1) + ".00.00.00";
+    }
+    
+    public String getAreaCodigo() {
+        return numeroCNPQ.substring(0, 4) + ".00.00";
+    }
+    
+    public String getPaiCodigo() {
+        if(isGrandeArea()) return null;
+        if(isArea()) return getGrandeAreaCodigo();
+        if(!numeroCNPQ.substring(8,9).contentEquals("00")) 
+            return numeroCNPQ.substring(0, 7) + "00";
+        else
+            return numeroCNPQ.substring(0, 4) + ".00.00";
+    }
+    
+    
 
     //GETTER E SETTER
     @Override
@@ -66,6 +118,49 @@ public class AreaConhecimento implements Entidade, Serializable {
     public void setNumeroCNPQ(String numeroCNPQ) {
         this.numeroCNPQ = numeroCNPQ;
     }
+
+    public List<Pessoa> getPessoas() {
+        return pessoas;
+    }
+
+    public void setPessoas(List<Pessoa> pessoas) {
+        this.pessoas = pessoas;
+    }
+
+    public AreaConhecimento getGrandeArea() {
+        return grandeArea;
+    }
+
+    public void setGrandeArea(AreaConhecimento grandeArea) {
+        this.grandeArea = grandeArea;
+    }
+
+    public AreaConhecimento getArea() {
+        return area;
+    }
+
+    public void setArea(AreaConhecimento area) {
+        this.area = area;
+    }
+
+    public AreaConhecimento getSuperArea() {
+        return superArea;
+    }
+
+    public void setSuperArea(AreaConhecimento superArea) {
+        this.superArea = superArea;
+    }
+
+    public List<AreaConhecimento> getSubAreas() {
+        return subAreas;
+    }
+
+    public void setSubAreas(List<AreaConhecimento> subAreas) {
+        this.subAreas = subAreas;
+    }
+    
+    
+       
 
     @Override
     public int hashCode() {

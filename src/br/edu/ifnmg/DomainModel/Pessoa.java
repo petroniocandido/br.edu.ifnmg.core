@@ -98,7 +98,7 @@ public class Pessoa implements Entidade, Serializable {
     @Enumerated(EnumType.STRING)
     protected Sexo sexo;
     
-    @ManyToMany(cascade = CascadeType.MERGE, targetEntity = AreaConhecimento.class)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = AreaConhecimento.class)
     @JoinTable(name = "pessoas_areasconhecimento", 
             joinColumns=@JoinColumn(name="Pessoa_ID", referencedColumnName="ID"),
             inverseJoinColumns=@JoinColumn(name="areasConhecimento_ID", referencedColumnName="ID"))

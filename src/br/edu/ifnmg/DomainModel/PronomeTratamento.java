@@ -24,6 +24,10 @@ public enum PronomeTratamento {
     private PronomeTratamento(String descricao) {
         this.descricao = descricao;
     }
+    
+    public String getDescricao() {
+        return descricao;
+    }
 
     @Override
     public String toString() {

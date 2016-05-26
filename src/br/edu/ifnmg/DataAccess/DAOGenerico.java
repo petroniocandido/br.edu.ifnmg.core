@@ -43,6 +43,7 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
     private HashMap<String, String> join = new HashMap<>();
     private HashMap<Integer, Object> params = new HashMap<>();
     private boolean jts = true;
+    private boolean distinct = false;
     private int numeroresultados;
 
     public DAOGenerico(Class t) {
@@ -69,6 +70,12 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
         getManager().setFlushMode(FlushModeType.COMMIT);
     }
 
+    @Override
+    public Repositorio<T> Unico() {
+        this.distinct = true;
+        return this;
+    }
+    
     @Override
     public Repositorio<T> Join(String campo, String alias) {
         join.put(campo, alias);
@@ -287,7 +294,10 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
 
     private Query processQuery() {
         try {
-            StringBuilder sql = new StringBuilder("select o from ").append(tipo.getSimpleName()).append(" o ");
+            
+            String dist = (distinct ? " distinct " : "");
+            
+            StringBuilder sql = new StringBuilder("select").append(dist).append(" o from ").append(tipo.getSimpleName()).append(" o ");
 
             if (join.size() > 0) {
                 for (String key : join.keySet()) {
@@ -326,6 +336,7 @@ public abstract class DAOGenerico<T extends Entidade> implements Repositorio<T> 
             params.clear();
             where = new StringBuilder();
             order = new StringBuilder();
+            distinct = false;
         }
     }
 

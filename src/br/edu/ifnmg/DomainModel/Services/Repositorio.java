@@ -38,6 +38,7 @@ public interface Repositorio<T> {
     
     public Class getTipo();
     
+    public Repositorio<T> Unico();
     public Repositorio<T> Join(String campo, String alias);
     public Repositorio<T> IgualA(String campo, Object valor);
     public Repositorio<T> DiferenteDe(String campo, Object valor);
